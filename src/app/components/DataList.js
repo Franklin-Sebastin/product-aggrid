@@ -9,7 +9,7 @@ ModuleRegistry.registerModules([AllCommunityModule]);
 
 const DataList = () => {
     const [rowData,setRowData]=useState([]);
-    const [gridApi] = useState(null);
+    const [gridApi,setGridApi] = useState(null);
     const [quickFilter,setQuickFilter]=useState(null);
     
     const [colDefs]=useState([
@@ -62,7 +62,10 @@ const DataList = () => {
         fetchData();
     },[]);
 
-    
+    const onGridReady = (params) => {
+        setGridApi(params.api);
+      };
+
      const onExportClick = () => {
             gridApi.exportDataAsCsv(); 
       };
@@ -83,6 +86,7 @@ const DataList = () => {
             columnDefs={colDefs}
             defaultColDef={defaultColDef}
             quickFilterText={quickFilter}
+            onGridReady={onGridReady}
             pagination={true} 
             paginationPageSizeSelector={false}
             paginationPageSize={50}
